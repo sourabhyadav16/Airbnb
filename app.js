@@ -17,14 +17,27 @@ async function main() {
     await mongoose.connect(url);
 }
 
+app.set("view engine","ejs");
+app.set("views",path.join(__dirname,"views"));
+app.use(express.urlencoded({extended : true})); //to parse the data
+
 app.get("/", (req,res)=> {
     res.send("Hello");
 });
 
-app.get("/listings", (req,res)=> {
-    const allListings = Listing.find({});
-    res.render("index.ejs", allListings);
+//Index route
+app.get("/listings", async (req,res)=> {
+    const allListings = await Listing.find({});
+    res.render("listings/index.ejs", {allListings});
 });
+
+//Show route
+app.get("/listings/:id", async (req,res)=>{
+    let {id} = req.params;
+    const listing = await Listing.findById(id);
+    console.log(listing);
+    res.render("listings/show.ejs", {listing});
+})
 
 app.listen(8080, ()=>{
     console.log("Connected");

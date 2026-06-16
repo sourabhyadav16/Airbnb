@@ -6,7 +6,7 @@ const listingSchema = new Schema({
         type : String,
         required : true,
     },
-    discription : String,
+    description : String,
     image : {
         filename : String,
         url : {
