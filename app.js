@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const Listing = require("./models/listen.js");
 const path = require("path");
 const methodOverride = require("method-override"); //for put method
+const ejsMate = require("ejs-mate");
 
 const url = 'mongodb://127.0.0.1:27017/wonderlust';
 
@@ -22,6 +23,7 @@ app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"views"));
 app.use(express.urlencoded({extended : true})); //to parse the data
 app.use(methodOverride("_method"));
+app.engine('ejs', ejsMate);
 
 //Main root
 app.get("/", (req,res)=> {
